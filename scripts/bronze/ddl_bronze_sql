@@ -1,0 +1,85 @@
+/*
+********************************************************************************************************************
+DDL SCRIPT: CREATE BRONZE LAYER
+********************************************************************************************************************
+Script Purpose:
+               This script create tables in bronze schemas dropping existing tables
+               if they already exists.
+               Run this script to re-defined the DDL structure of bronze layer.
+**********************************************************************************************************************
+*/
+if object_id('bronze.crm_customer_info','U') IS NIT NULL
+Drop table bronze.crm_customer_info;
+GO
+CREATE TABLE bronze.crm_customer_info(
+	cst_id SERIAL PRIMARY KEY, 
+	cst_key VARCHAR(100), 
+	cst_firstname VARCHAR(50), 
+	cst_lastname VARCHAR(50), 
+	cst_marital_status VARCHAR(5), 
+	cst_gndr VARCHAR(5), 
+	cst_create_date DATE
+	); 
+
+if object_id('bronze.crm_prd_info','U') IS NIT NULL
+Drop table bronze.crm_prd_info;
+GO
+CREATE TABLE bronze.crm_prd_info (
+	prd_id SERIAL PRIMARY KEY, 
+	prd_key VARCHAR(50), 
+	prd_nm VARCHAR(50), 
+	prd_cost INT, 
+	prd_line VARCHAR(50), 
+	prd_start_dt DATE, 
+	prd_end_dt DATE	
+);
+
+if object_id('bronze.crm_sales_detailso','U') IS NIT NULL
+Drop table bronze.crm_sales_details;
+GO
+CREATE TABLE bronze.crm_sales_details(
+	sls_ord_num VARCHAR(50) PRIMARY KEY, 
+	sls_prd_key VARCHAR(50), 
+	sls_cust_id INT REFERENCES bronze.crm_customer_info(cst_id), 
+	sls_order_dt INT, 
+	sls_ship_dt INT, 
+	sls_due_dt INT, 
+	sls_sales INT, 
+	sls_quantity INT, 
+	sls_price INT
+);
+
+if object_id('bronze.erp_cust_AZ12','U') IS NIT NULL
+Drop table bronze.erp_cust_AZ12;
+GO
+CREATE TABLE bronze.erp_cust_AZ12 (
+	CID VARCHAR(50) PRIMARY KEY, 
+	BDATE DATE, 
+	GEN VARCHAR(30)
+);
+
+if object_id('bronze.erp_loc_A101','U') IS NIT NULL
+Drop table bronze.erp_loc_A101;
+GO
+CREATE TABLE bronze.erp_loc_A101(
+	CID VARCHAR(50), 
+	CNTRY VARCHAR(50)
+);
+
+if object_id('bronze.erp_px_cat_g1v2','U') IS NIT NULL
+Drop table bronze.erp_px_cat_g1v2;
+GO
+CREATE TABLE bronze.erp_px_cat_g1v2 (
+	ID VARCHAR(10), 
+	CAT VARCHAR(50), 
+	SUBCAT VARCHAR(50), 
+	MAINTENANCE VARCHAR(10)
+);
+
+
+
+
+
+
+
+              
