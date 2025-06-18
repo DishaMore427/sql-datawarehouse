@@ -1,0 +1,75 @@
+/*
+************************************************************************************************************************************************
+DDL SCRIPT:Creating Silver Tables
+************************************************************************************************************************************************
+Script Purpose:
+              This script creates tablles in the 'Silver' schema, dropping existing tables
+              if they already exist.
+              Run this script to re-defined the DDL structure of 'bronze' Tables
+************************************************************************************************************************************************              
+*/
+
+if object_id('silver.crm_cust_info','U') IS NOT NULL
+Drop table silver.crm_cust_info;
+GO
+CREATE TABLE silver.crm_cust_info(
+cust_id INT,
+cust_firstname NVARCHAR(50),
+cust_lastname NVARCHAR(50),
+cust_material_status NVARCHAR(50),
+cust_gen NVARCHAR(50),
+cust_create_dt DATETIME
+); 
+
+if object_id('silver.crm_prd_info','U') IS NOT NULL
+Drop table silver.crm_prd_info;
+GO
+CREATE TABLE silver.crm_prd_info (
+prd_key INT,
+prd_nm NVARCHAR(50),
+prd_cost NVARCHAR(50),
+prd_line NVARCHAR(50),
+prd_startdt DATETIME,
+prd_enddt DATETIME
+);
+
+if object_id('silver.crm_sales_details','U') IS NOT NULL
+Drop table silver.crm_sales_details;
+GO
+CREATE TABLE silver.crm_sales_details(
+	sls_ord_num VARCHAR(50), 
+	sls_prd_num VARCHAR(50), 
+	sls_cust_id INT ,
+	sls_order_dt INT, 
+	sls_ship_dt INT, 
+	sls_due_dt INT, 
+	sls_sales INT, 
+	sls_quantity INT, 
+	sls_price INT
+);
+
+if object_id('silver.erp_cust_az12','U') IS NOT NULL
+Drop table silver.erp_cust_az12;
+GO
+CREATE TABLE silver.erp_cust_az12 (
+cust_id INT,
+cust_name NVARCHAR(50),
+cust_gen NVARCHAR(50)
+);
+
+if object_id('silver.erp_loc_a101','U') IS NOT NULL
+Drop table silver.erp_loc_a101;
+GO
+CREATE TABLE silver.erp_loc_a101(
+	c_id VARCHAR(50), 
+	cntry VARCHAR(50)
+);
+
+if object_id('silver.erp_px_cat_g1v2','U') IS NOT NULL
+Drop table silver.erp_px_cat_g1v2;
+GO
+CREATE TABLE silver.erp_px_cat_g1v2 (
+pro_id NVARCHAR(50),
+pro_type NVARCHAR(50),
+pro_name NVARCHAR(50),
+);
